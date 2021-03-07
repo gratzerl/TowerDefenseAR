@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// This component displays a message on the screen indicating the current state of the game.
+    /// </summary>
     public class GameStateTextHandler : MonoBehaviour, IUiElement
     {
         public string WonMessage;
@@ -13,10 +16,9 @@ namespace Assets.Scripts.UI
         public GameState[] VisibleGameStates => visiblegameStates;
 
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.GameOver, GameState.Paused, GameState.Won };
-
         private Text displayedText;
 
-        void Awake()
+        private void Awake()
         {
             gameObject.AddComponent(typeof(ReferenceableComponent));
             displayedText = gameObject.GetComponent<Text>();
@@ -25,6 +27,9 @@ namespace Assets.Scripts.UI
             gameStateService.GameStateChanged += UpdateText;
         }
 
+        /// <summary>
+        /// Updates the text in the middle of the screen, after the game state changed.
+        /// </summary>
         private void UpdateText(object sender, GameState gameState)
         {
             switch(gameState)

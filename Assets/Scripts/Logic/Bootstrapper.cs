@@ -2,6 +2,9 @@
 
 namespace Assets.Scripts.Logic
 {
+    /// <summary>
+    /// Bootstrapper for initialising the dependency injection container.
+    /// </summary>
     public static class Bootstrapper
     {
         /// <summary>

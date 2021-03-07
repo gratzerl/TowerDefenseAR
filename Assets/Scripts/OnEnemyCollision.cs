@@ -5,12 +5,16 @@ using System.Linq;
 using System;
 using UnityEngine;
 
+/// <summary>
+/// This component handles the collision with an enemy.
+/// Enemies colliding with this component die.
+/// </summary>
 public class OnEnemyCollision : MonoBehaviour
 {
     private Player player;
     private IGameStateService gameStateService;
 
-    void Start()
+    private void Start()
     {
         gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
         var refsContainer = ServiceContainer.Instance.Get<ReferencablesContainer>();
@@ -35,7 +39,6 @@ public class OnEnemyCollision : MonoBehaviour
         player.TakeHit();
         if(!other.TryGetComponent<Enemy>(out var enemy))
         {
-            Debug.LogError($"GameObject is missing a component");
             throw new MissingComponentException($"GameObject with Tag {TowerDefense.Tags.Enemy} does not have a 'enemy' component attached");
         }
 

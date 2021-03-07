@@ -1,8 +1,15 @@
-﻿using System;
+﻿using Assets.Scripts.Logic;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
+    /// <summary>
+    /// Component for enemies.
+    /// Exposes an event which is invoked when the enemy is killed.
+    /// Manages the enemies current and max health and exposes a method
+    /// to apply damage to the enemy.
+    /// </summary>
     public class Enemy : MonoBehaviour
     {
         private int currentHealth;
@@ -11,8 +18,9 @@ namespace Assets.Scripts
         public int MaxHealth;
         public event EventHandler Killed;
 
-        void Start()
+        private void Start()
         {
+            gameObject.AddComponent<ReferenceableComponent>();
             currentHealth = MaxHealth;
         }
 

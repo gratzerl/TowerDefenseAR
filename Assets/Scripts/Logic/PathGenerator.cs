@@ -21,7 +21,6 @@ namespace Assets.Scripts.Logic
         #endregion
 
         #region Properties & Events
-        public event EventHandler<IEnumerable<Vector3>> CurrentPathChanged;
         public IReadOnlyList<Vector3> CurrentPath
         {
             get => _currentPath.AsReadOnly();
@@ -30,22 +29,19 @@ namespace Assets.Scripts.Logic
                 lock(locker)
                 {
                     _currentPath = value.ToList();
-                    CurrentPathChanged?.Invoke(this, _currentPath);
                 }
             }
         }
         #endregion
 
         #region Methods
-        /// https://forum.unity.com/threads/random-path-with-end-target.105344/
-        /// https://stackoverflow.com/questions/45160728/algorithm-to-generate-random-path-in-2d-tilemap
         /// <summary>
         /// Generates a random path between start and end.
         /// Updates <see cref="CurrentPath "/>and raises the <see cref="CurrentPathChanged"/> event.
+        /// The method is based on two algorithms:
+        /// https://forum.unity.com/threads/random-path-with-end-target.105344/
+        /// https://stackoverflow.com/questions/45160728/algorithm-to-generate-random-path-in-2d-tilemap
         /// </summary>
-        /// <param name="start">Start position</param>
-        /// <param name="end">End position</param>
-        /// <returns>A random path connecting start and end position.</returns>
         public IEnumerable<Vector3> GeneratePath(Vector3 start, Vector3 end)
         {
             var direction = start - end;
@@ -96,6 +92,9 @@ namespace Assets.Scripts.Logic
             return CurrentPath;
         }
 
+        /// <summary>
+        /// Returns a random angle between <paramref name="minDegree"/> and <paramref name="maxDegree"/> in radians.
+        /// </summary>
         private float RandomAngleRad(int minDegree, int maxDegree)
         {
             return (float)(Math.PI * UnityEngine.Random.Range(minDegree, maxDegree) / 180.0);

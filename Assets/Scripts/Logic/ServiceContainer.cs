@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Logic
 {
+    /// <summary>
+    /// Thread-safe singleton for managing the other services.
+    /// It is a simpler implementation of a dependency injection container.
+    /// </summary>
     public sealed class ServiceContainer
     {
         #region Private Members
@@ -28,6 +32,9 @@ namespace Assets.Scripts.Logic
             }
         }
 
+        /// <summary>
+        /// Registers the service for the specified type <typeparamref name="T"/>.
+        /// </summary>
         public void Register<T>(T service)
         {
             var name = typeof(T).Name;
@@ -40,6 +47,9 @@ namespace Assets.Scripts.Logic
             services[name] = service;
         }
 
+        /// <summary>
+        /// Returns a registered service for the specified type <typeparamref name="T"/>.
+        /// </summary>
         public T Get<T>()
         {
             var name = typeof(T).Name;
@@ -51,6 +61,9 @@ namespace Assets.Scripts.Logic
             return (T)services[name];
         }
 
+        /// <summary>
+        /// Removes a registered service with the type <typeparamref name="T"/>.
+        /// </summary>
         public void Unregister<T>()
         {
             var name = typeof(T).Name;

@@ -5,27 +5,27 @@ using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// This components sets ui elements active or inactive depending on the
+    /// current game state.
+    /// </summary>
     public class UiElementVisibilityComponent : MonoBehaviour
     {
         private IList<(GameObject, IUiElement)> uiElements = new List<(GameObject, IUiElement)>();
         private ReferencablesContainer referencablesContainer;
 
-        void Awake()
+        private void Awake()
         {
             referencablesContainer = ServiceContainer.Instance.Get<ReferencablesContainer>();
             GetUiElements();
 
             var gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
             gameStateService.GameStateChanged += HandleGameStateChange;
-
-            // TODO: Check if spawn & end are tracked disable ui element accordingly
         }
 
         private void GetUiElements()
         {
             uiElements = referencablesContainer.GetComponents<IUiElement>();
-
-            Debug.Log($"Got {uiElements.Count} ui game objects");
         }
 
         private void HandleGameStateChange(object sender, GameState gameState)

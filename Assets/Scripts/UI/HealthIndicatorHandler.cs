@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// Component responsible for displaying the current life stats of the player.
+    /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to 
+    /// <see cref="GameState.Paused"/>, and <see cref="GameState.Running"/>.
+    /// </summary>
     public class HealthIndicatorHandler : MonoBehaviour, IUiElement
     {
         public GameState[] VisibleGameStates => visiblegameStates;
@@ -14,14 +19,14 @@ namespace Assets.Scripts.UI
         private Text healthIndicator;
         private Player player;
 
-        void Awake()
+        private void Awake()
         {
             gameObject.AddComponent(typeof(ReferenceableComponent));
             
             healthIndicator = gameObject.GetComponent<Text>();
         }
 
-        void Start()
+        private void Start()
         {
             var refsContainer = ServiceContainer.Instance.Get<ReferencablesContainer>();
             
@@ -33,11 +38,15 @@ namespace Assets.Scripts.UI
             }
             
             player = playerTuple.Item2;
-            player.CurrentLivesChanged += HandleLivesChanged;
+            player.CurrentLivesChanged += LivesChanged;
             UpdateText(player.MaxLives, player.CurrentLives);
         }
 
-        private void HandleLivesChanged(object sender, int currentLives)
+        /// <summary>
+        /// Event handler when the player's life count changed.
+        /// Updates the health indicator in the ui.
+        /// </summary>
+        private void LivesChanged(object sender, int currentLives)
         {
             UpdateText(player.MaxLives, currentLives);
         }

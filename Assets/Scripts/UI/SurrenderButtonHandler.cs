@@ -3,23 +3,18 @@ using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// Component for the pause button. 
+    /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to <see cref="GameState.Paused"/>.
+    /// </summary>
     public class SurrenderButtonHandler : MonoBehaviour, IUiElement
     {
         public GameState[] VisibleGameStates => visiblegameStates;
-
-        private IGameStateService gameStateService;
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.Paused };
 
-        void Awake()
+        private void Awake()
         {
             gameObject.AddComponent(typeof(ReferenceableComponent));
-
-            gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
-        }
-
-        public void SurrenderGame()
-        {
-            gameStateService.SurrenderGame();
         }
     }
 }

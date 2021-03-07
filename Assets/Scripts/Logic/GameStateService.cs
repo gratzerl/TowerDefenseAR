@@ -1,11 +1,10 @@
 ﻿using Assets.Scripts.Logic;
 using System;
-using UnityEngine;
 
-/*
- * Thread-safe service for managing the current game state.
- * Provides an event which is invoked after the game state changed.
- */
+/// <summary>
+/// Thread-safe service for managing the current game state.
+/// Provides an event which is invoked after the game state changed.
+/// </summary>
 sealed class GameStateService: IGameStateService
 {
     #region Private Members
@@ -29,32 +28,13 @@ sealed class GameStateService: IGameStateService
         }
     }
 
+    /// <summary>
+    /// Invokes the <see cref="Initialising"/> event and sets the game state
+    /// to <see cref="GameState.Ready"/>.
+    /// </summary>
     public void InitialiseGame()
     {
         Initialising?.Invoke(this, EventArgs.Empty);
         CurrentState = GameState.Ready;
-    }
-
-    public void StartGame()
-    {
-        if (CurrentState != GameState.Ready && CurrentState != GameState.Paused)
-        {
-            InitialiseGame();
-        }
-
-        CurrentState = GameState.Running;
-        Time.timeScale = 1;
-    }
-
-    public void PauseGame()
-    {
-        CurrentState = GameState.Paused;
-        Time.timeScale = 0;
-    }
-
-    public void SurrenderGame()
-    {
-        CurrentState = GameState.GameOver;
-        Time.timeScale = 0;
     }
 }

@@ -2,59 +2,63 @@
 using System;
 using UnityEngine;
 
-/// <summary>
-/// Represents the player.
-/// </summary>
-public class Player : MonoBehaviour
-{
-    private IGameStateService gameStateService;
-    private int currentLives;
-    private bool isDead = false;
-
-    public int MaxLives;
-    public int CurrentLives {
-        get => currentLives;
-        private set
-        {
-            currentLives = value;
-            CurrentLivesChanged?.Invoke(this, CurrentLives);
-        }
-    }
-
-    public event EventHandler<int> CurrentLivesChanged;
-    public event EventHandler Died;
-
-
-    private void Awake()
+namespace Assets.Scripts {
+    /// <summary>
+    /// Represents the player, manages the current lives of the player and
+    /// exposes an event when the player died.
+    /// </summary>
+    public class Player : MonoBehaviour
     {
-        gameObject.AddComponent<ReferenceableComponent>();
-        currentLives = MaxLives;
-
-        gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
-        gameStateService.Initialising += InitialisePlayer;
-    }
-
-    public void TakeHit()
-    {
-        if (gameStateService.CurrentState != GameState.Running)
-        {
-            return;
+        public int MaxLives;
+        public int CurrentLives {
+            get => currentLives;
+            private set
+            {
+                currentLives = value;
+                CurrentLivesChanged?.Invoke(this, CurrentLives);
+            }
         }
 
-        if (CurrentLives > 0)
+        public event EventHandler<int> CurrentLivesChanged;
+        public event EventHandler Died;
+
+        private IGameStateService gameStateService;
+        private int currentLives;
+        private bool isDead = false;
+
+        private void Awake()
         {
+            gameObject.AddComponent<ReferenceableComponent>();
+        
+            currentLives = MaxLives;
+
+            gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
+            gameStateService.Initialising += InitialisePlayer;
+        }
+
+        /// <summary>
+        /// Subtracts one life of the player's current lives.
+        /// When no lives are left, the <see cref="Died"/> event is invoked.
+        /// </summary>
+        public void TakeHit()
+        {
+            if (isDead || gameStateService.CurrentState != GameState.Running)
+            {
+                return;
+            }
+
             CurrentLives--;
-            CurrentLivesChanged?.Invoke(this, CurrentLives);
-        }
-        else if (CurrentLives == 0 && !isDead)
-        {
-            isDead = true;
-            Died?.Invoke(gameObject, EventArgs.Empty);
-        }
-    }
 
-    private void InitialisePlayer(object sender, EventArgs args)
-    {
-        CurrentLives = MaxLives;
+            if (CurrentLives == 0 && !isDead)
+            {
+                isDead = true;
+                Died?.Invoke(gameObject, EventArgs.Empty);
+            }
+        }
+
+        private void InitialisePlayer(object sender, EventArgs args)
+        {
+            CurrentLives = MaxLives;
+        }
     }
 }

@@ -1,20 +1,19 @@
 ﻿using Assets.Scripts.Logic;
 using UnityEngine;
 
-public class ResumeButtonHandler : MonoBehaviour, IUiElement
+namespace Assets.Scripts.UI
 {
-    IGameStateService gameStateService;
-
-    private readonly GameState[] visiblegameStates = new GameState[] { GameState.Paused };
-    public GameState[] VisibleGameStates => visiblegameStates;
-    private void Awake()
+    /// <summary>
+    /// Component for the resume button. 
+    /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to <see cref="GameState.Paused"/>.
+    /// </summary>
+    public class ResumeButtonHandler : MonoBehaviour, IUiElement
     {
-        gameObject.AddComponent(typeof(ReferenceableComponent));
-        gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
-    }
-
-    public void ResumeGame()
-    {
-        gameStateService.StartGame();
+        private readonly GameState[] visiblegameStates = new GameState[] { GameState.Paused };
+        public GameState[] VisibleGameStates => visiblegameStates;
+        private void Awake()
+        {
+            gameObject.AddComponent(typeof(ReferenceableComponent));
+        }
     }
 }

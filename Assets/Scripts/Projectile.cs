@@ -1,38 +1,43 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Constants;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Constants;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+namespace Assets.Scripts
 {
-    public float Speed;
-    public int Damage;
-    public GameObject Target { get; set; }
-
-    void Update()
+    /// <summary>
+    /// Component for projectiles.
+    /// Detroys itself if its target is destroyed.
+    /// On collision it will apply a specified amount of damage to the enemy.
+    /// </summary>
+    public class Projectile : MonoBehaviour
     {
-        if (Target == null)
+        public float Speed;
+        public int Damage;
+        public GameObject Target { get; set; }
+
+        private void Update()
         {
+            if (Target == null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            if (transform.position != Target.transform.position)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, Time.deltaTime * Speed);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other.gameObject.CompareTag(TowerDefense.Tags.Enemy))
+            {
+                return;
+            }
+
+            var enemy = other.GetComponent<Enemy>();
+            enemy.TakeDamage(Damage);
             Destroy(gameObject);
-            return;
         }
-
-        if (transform.position != Target.transform.position)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, Time.deltaTime * Speed);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.gameObject.CompareTag(TowerDefense.Tags.Enemy))
-        {
-            return;
-        }
-
-        var enemy = other.GetComponent<Enemy>();
-        enemy.TakeDamage(Damage);
-        Destroy(gameObject);
     }
 }

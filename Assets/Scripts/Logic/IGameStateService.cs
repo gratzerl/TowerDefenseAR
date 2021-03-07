@@ -6,11 +6,8 @@ namespace Assets.Scripts.Logic
     {
         event EventHandler Initialising;
         event EventHandler<GameState> GameStateChanged;
-        GameState CurrentState { get; }
+        GameState CurrentState { get; set; }
 
         void InitialiseGame();
-        void StartGame();
-        void PauseGame();
-        void SurrenderGame();
     }
 }

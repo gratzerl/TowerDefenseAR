@@ -8,6 +8,7 @@ TagManager:
   - Spawn
   - End
   - WaypointAnchor
+  - Defender
   layers:
   - Default
   - TransparentFX
