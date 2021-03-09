@@ -30,9 +30,9 @@ namespace Assets.Scripts.UI
         /// <summary>
         /// Updates the text in the middle of the screen, after the game state changed.
         /// </summary>
-        private void UpdateText(object sender, GameState gameState)
+        private void UpdateText(object sender, GameStateChangedEventArgs args)
         {
-            switch(gameState)
+            switch(args.CurrentState)
             {
                 case GameState.GameOver:
                     displayedText.text = GameOverMessage;

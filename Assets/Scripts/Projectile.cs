@@ -13,6 +13,12 @@ namespace Assets.Scripts
         public float Speed;
         public int Damage;
         public GameObject Target { get; set; }
+        
+
+        private void Start()
+        {
+            transform.rotation = Target.transform.rotation;
+        }
 
         private void Update()
         {

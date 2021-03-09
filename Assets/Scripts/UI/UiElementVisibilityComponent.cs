@@ -28,11 +28,11 @@ namespace Assets.Scripts.UI
             uiElements = referencablesContainer.GetComponents<IUiElement>();
         }
 
-        private void HandleGameStateChange(object sender, GameState gameState)
+        private void HandleGameStateChange(object sender, GameStateChangedEventArgs args)
         {
             foreach(var (gameObj, uiElement) in uiElements)
             {
-                gameObj.SetActive(uiElement.VisibleGameStates.Contains(gameState));
+                gameObj.SetActive(uiElement.VisibleGameStates.Contains(args.CurrentState));
             }
         }
     }

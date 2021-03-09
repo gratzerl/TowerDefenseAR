@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Logic;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -10,6 +9,8 @@ namespace Assets.Scripts
     /// Manages the enemies current and max health and exposes a method
     /// to apply damage to the enemy.
     /// </summary>
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Collider))]
     public class Enemy : MonoBehaviour
     {
         private int currentHealth;

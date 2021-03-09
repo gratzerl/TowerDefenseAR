@@ -11,7 +11,7 @@ namespace Assets.Scripts.Logic
     sealed class PathGenerator: IPathGenerator
     {
         #region Private Members
-        private const float minDistToEnd = 0.03f;
+        private const float minDistToEnd = 0.01f;
         private const float varianceScalingFactor = 0.2f;
         private const float xScalingFactor = 0.03f;
         private const float stepSize = 0.025f;
@@ -32,6 +32,8 @@ namespace Assets.Scripts.Logic
                 }
             }
         }
+
+        public event EventHandler PathChanged;
         #endregion
 
         #region Methods
@@ -87,6 +89,7 @@ namespace Assets.Scripts.Logic
             lock (locker)
             {
                 CurrentPath = path;
+                PathChanged?.Invoke(this, EventArgs.Empty);
             }
 
             return CurrentPath;

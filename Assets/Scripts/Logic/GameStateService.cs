@@ -13,7 +13,7 @@ sealed class GameStateService: IGameStateService
     #endregion
 
     public event EventHandler Initialising; 
-    public event EventHandler<GameState> GameStateChanged;
+    public event EventHandler<GameStateChangedEventArgs> GameStateChanged;
     
     public GameState CurrentState
     {
@@ -22,8 +22,10 @@ sealed class GameStateService: IGameStateService
         {
             lock (locker)
             {
+                var previous = currentState;
                 currentState = value;
-                GameStateChanged?.Invoke(this, currentState);
+                var args = new GameStateChangedEventArgs { PreviousState = previous, CurrentState = currentState };
+                GameStateChanged?.Invoke(this, args);
             }
         }
     }
