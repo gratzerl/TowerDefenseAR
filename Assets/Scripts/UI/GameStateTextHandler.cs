@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Logic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
@@ -16,12 +16,12 @@ namespace Assets.Scripts.UI
         public GameState[] VisibleGameStates => visiblegameStates;
 
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.GameOver, GameState.Paused, GameState.Won };
-        private Text displayedText;
+        private TMP_Text displayedText;
 
         private void Awake()
         {
             gameObject.AddComponent(typeof(ReferenceableComponent));
-            displayedText = gameObject.GetComponent<Text>();
+            displayedText = gameObject.GetComponent<TextMeshProUGUI>();
 
             var gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
             gameStateService.GameStateChanged += UpdateText;
@@ -42,6 +42,9 @@ namespace Assets.Scripts.UI
                     break;
                 case GameState.Won:
                     displayedText.text = WonMessage;
+                    break;
+                default:
+                    displayedText.text = string.Empty;
                     break;
             }
         }

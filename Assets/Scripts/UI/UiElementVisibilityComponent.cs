@@ -13,27 +13,38 @@ namespace Assets.Scripts.UI
     {
         private IList<(GameObject, IUiElement)> uiElements = new List<(GameObject, IUiElement)>();
         private ReferencablesContainer referencablesContainer;
+        private IGameStateService gameStateService;
 
         private void Awake()
         {
             referencablesContainer = ServiceContainer.Instance.Get<ReferencablesContainer>();
-            GetUiElements();
 
-            var gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
+            gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
             gameStateService.GameStateChanged += HandleGameStateChange;
         }
 
+
+        private void Start()
+        {
+            GetUiElements();
+            UpdateVisibility(gameStateService.CurrentState);
+        }
         private void GetUiElements()
         {
             uiElements = referencablesContainer.GetComponents<IUiElement>();
         }
 
+        private void UpdateVisibility(GameState currentState)
+        {
+            foreach (var (gameObj, uiElement) in uiElements)
+            {
+                gameObj.SetActive(uiElement.VisibleGameStates.Contains(currentState));
+            }
+        }
+
         private void HandleGameStateChange(object sender, GameStateChangedEventArgs args)
         {
-            foreach(var (gameObj, uiElement) in uiElements)
-            {
-                gameObj.SetActive(uiElement.VisibleGameStates.Contains(args.CurrentState));
-            }
+            UpdateVisibility(args.CurrentState);
         }
     }
 }

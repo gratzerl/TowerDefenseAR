@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Logic;
 using System;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,14 +17,14 @@ namespace Assets.Scripts.UI
         public GameState[] VisibleGameStates => visiblegameStates;
         
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.Running, GameState.Paused };
-        private Text healthIndicator;
+        private TMP_Text healthIndicator;
         private Player player;
 
         private void Awake()
         {
             gameObject.AddComponent(typeof(ReferenceableComponent));
             
-            healthIndicator = gameObject.GetComponent<Text>();
+            healthIndicator = gameObject.GetComponent<TextMeshProUGUI>();
         }
 
         private void Start()
