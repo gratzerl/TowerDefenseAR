@@ -6,7 +6,7 @@ namespace Assets.Scripts.UI
     /// <summary>
     /// Component for logo UI element. 
     /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to 
-    /// <see cref="GameState.GameOver"/>, <see cref="GameState.MissingTrackers"/>, <see cref="GameState.Won"/>, and <see cref="GameState.Ready"/>.
+    /// <see cref="GameState.GameOver"/>, <see cref="GameState.MissingTrackers"/>, and <see cref="GameState.Initialised"/>.
     /// </summary>
     public class LogoHandler : MonoBehaviour, IUiElement
     {
