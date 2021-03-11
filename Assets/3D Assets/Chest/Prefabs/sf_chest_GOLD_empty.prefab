@@ -54,10 +54,11 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 02dac21733d1d104b9043ebc9235daff, type: 2}
+  - {fileID: 2100000, guid: 1502608182d3ec346aaa5a8c7bd83aca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,10 +133,11 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 02dac21733d1d104b9043ebc9235daff, type: 2}
+  - {fileID: 2100000, guid: 1502608182d3ec346aaa5a8c7bd83aca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -166,7 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4024657915624390561}
   m_Layer: 0
-  m_Name: sf_chest_GOLD
+  m_Name: sf_chest_GOLD_empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

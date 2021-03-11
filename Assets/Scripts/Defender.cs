@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Assets.Scripts {
     /// <summary>
     /// Component for defender objects which shoot projectiles at an enemy
-    /// if the enemy is within its reach.
+    /// if the enemy is within its range of action.
     /// </summary>
     public class Defender : MonoBehaviour
     {

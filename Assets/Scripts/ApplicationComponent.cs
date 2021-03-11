@@ -2,8 +2,10 @@
 using Assets.Scripts.Logic;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-
+using Vuforia;
+using static Vuforia.TrackableBehaviour;
 
 namespace Assets.Scripts
 {
@@ -16,10 +18,14 @@ namespace Assets.Scripts
         public GameObject WaypointPrefab;
 
         private readonly IList<GameObject> waypoints = new List<GameObject>();
+        private IEnumerable<RequiredTrackingMarker> requiredMarkers;
+
         private IPathGenerator pathGenerator;
         private IGameStateService gameStateService;
         private ReferencablesContainer referencables;
+
         private Player player;
+        private EnemySpawner spawn;
 
         private void Awake()
         {
@@ -37,12 +43,74 @@ namespace Assets.Scripts
 
             player.Died += PlayerDied;
 
-            if (!referencables.GetByName(TowerDefense.Objects.Spawn).TryGetComponent(out EnemySpawner spawn))
+            if (!referencables.GetByName(TowerDefense.Objects.Spawn).TryGetComponent(out spawn))
             {
                 throw new MissingComponentException($"The gameobject {TowerDefense.Objects.Spawn} is missing the {typeof(EnemySpawner)} component");
             }
 
             spawn.AllEnemiesCleared += EnemiesCleared;
+            RegisterMarkerHandler();
+        }
+
+        private void OnDestroy()
+        {
+            player.Died -= PlayerDied;
+            spawn.AllEnemiesCleared -= EnemiesCleared;
+            UnregisterMarkerhandler();
+        }
+
+        /// <summary>
+        /// Unregisteres the handler <see cref="HandleTrackingStatusChanged(StatusChangeResult)"/> from changes of the <see cref="TrackableBehaviour.Status"/>.
+        /// </summary>
+        private void UnregisterMarkerhandler()
+        {
+            requiredMarkers
+                .ToList()
+                .ForEach(marker =>
+                {
+                    marker.Behaviour.UnregisterOnTrackableStatusChanged(HandleTrackingStatusChanged);
+                });
+        }
+
+        /// <summary>
+        /// Registeres the handler <see cref="HandleTrackingStatusChanged(StatusChangeResult)"/> to changes of the <see cref="TrackableBehaviour.Status"/>.
+        /// </summary>
+        private void RegisterMarkerHandler()
+        {
+            requiredMarkers = referencables
+                .GetComponents<RequiredTrackingMarker>()
+                .Select(marker =>
+                {
+                    var behaviour = marker.Item2.Behaviour;
+                    behaviour.RegisterOnTrackableStatusChanged(HandleTrackingStatusChanged);
+                    return marker.Item2;
+                })
+                .ToList();
+        }
+
+        /// <summary>
+        /// Checks if all required tracking target are being tracked properly.
+        /// If not all required targets are being tracked the game state is set to <see cref="GameState.MissingTrackers"/>.
+        /// </summary>
+        /// <param name="status"></param>
+        private void HandleTrackingStatusChanged(StatusChangeResult status)
+        {
+            if (requiredMarkers == null || (gameStateService.CurrentState != GameState.Ready && gameStateService.CurrentState != GameState.MissingTrackers))
+            {
+                return;
+            }
+
+            var areAllTracked = requiredMarkers.All(req => req.Behaviour.CurrentStatus == Status.TRACKED);
+            if (!areAllTracked && gameStateService.CurrentState == GameState.Ready)
+            {
+                gameStateService.CurrentState = GameState.MissingTrackers;
+                Debug.Log("Required tracking markers are missing.");
+            } 
+            else if (areAllTracked && gameStateService.CurrentState == GameState.MissingTrackers)
+            {
+                gameStateService.CurrentState = GameState.Ready;
+                Debug.Log("All required tracking markers are begin tracked.");
+            }
         }
 
         /// <summary>

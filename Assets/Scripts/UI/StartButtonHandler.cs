@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Scripts.UI
 {
     /// <summary>
-    /// Component for the pause button. 
+    /// Component for the start button. 
     /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to 
     /// <see cref="GameState.GameOver"/>, <see cref="GameState.Won"/>, and <see cref="GameState.Ready"/>.
     /// </summary>

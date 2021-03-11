@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
@@ -45,16 +44,18 @@ namespace Assets.Scripts.UI
 
         /// <summary>
         /// Event handler when the player's life count changed.
-        /// Updates the health indicator in the ui.
         /// </summary>
         private void LivesChanged(object sender, int currentLives)
         {
             UpdateText(player.MaxLives, currentLives);
         }
 
+        /// <summary>
+        /// Updates the health indicator in the UI.
+        /// </summary>
         private void UpdateText(int maxLives, int currentLives)
         {
-            healthIndicator.text = $"{currentLives}/{maxLives}";
+            healthIndicator.text = $"{currentLives}/{maxLives} Lives";
         }
     }
 }

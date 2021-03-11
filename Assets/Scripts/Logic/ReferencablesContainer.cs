@@ -22,7 +22,7 @@ namespace Assets.Scripts.Logic
         {
             if (references.ContainsKey(name))
             {
-                Debug.LogError($"A referencable with the name {name} is already registered");
+                Debug.LogWarning($"A referencable with the name {name} is already registered");
                 return;
             }
 
@@ -30,13 +30,13 @@ namespace Assets.Scripts.Logic
         }
 
         /// <summary>
-        /// Returns the reference to an object with the passed name.
+        /// Returns the reference to an object with the given name.
         /// </summary>
         public ReferenceableComponent GetByName(string name)
         {
             if(!references.ContainsKey(name))
             {
-                Debug.LogError($"No referencable registered with the name {name}");
+                Debug.LogWarning($"No referencable registered with the name {name}");
                 return null;
             }
 
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Logic
         {
             if (!references.ContainsKey(name))
             {
-                Debug.LogError($"No referencable registered with the name {name}");
+                Debug.LogWarning($"No referencable registered with the name {name}");
                 return;
             }
 
