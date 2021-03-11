@@ -3,6 +3,7 @@
     public enum GameState
     {
         Unknown = 0,
+        Initialised,
         MissingTrackers,
         Ready,
         Running,

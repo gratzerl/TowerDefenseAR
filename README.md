@@ -29,3 +29,4 @@ The following assets are used:
 * [Tower 2](https://assetstore.unity.com/packages/3d/environments/fantasy/meshtint-free-turret-tower-02-mega-toon-series-157322)
 * [Tower 3](https://assetstore.unity.com/packages/3d/environments/fantasy/meshtint-free-turret-tower-03-mega-toon-series-157654)
 * [Lava Texture](https://assetstore.unity.com/packages/2d/textures-materials/nature/stylized-lava-texture-153161)
+* [Logo](https://assetstore.unity.com/packages/2d/gui/icons/20-logo-templates-with-customizable-psd-vector-sources-174999)

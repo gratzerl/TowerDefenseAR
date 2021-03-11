@@ -37,6 +37,6 @@ sealed class GameStateService: IGameStateService
     public void InitialiseGame()
     {
         Initialising?.Invoke(this, EventArgs.Empty);
-        CurrentState = GameState.Ready;
+        CurrentState = GameState.Initialised;
     }
 }
