@@ -11,10 +11,10 @@ namespace Assets.Scripts.Logic
     sealed class PathGenerator: IPathGenerator
     {
         #region Private Members
-        private const float minDistToEnd = 0.01f;
+        private const float minDistToEnd = 0.03f;
         private const float varianceScalingFactor = 0.2f;
-        private const float xScalingFactor = 0.03f;
-        private const float stepSize = 0.025f;
+        private const float xScalingFactor = 0.02f;
+        private const float stepSize = 0.015f;
         private static readonly object locker = new object();
 
         private List<Vector3> _currentPath = new List<Vector3>();
@@ -61,12 +61,12 @@ namespace Assets.Scripts.Logic
                 amount = Mathf.Clamp01(amount + stepSize);
                 var point = Vector3.Lerp(previous, end, amount);
                 
-                if ((point - end).magnitude <= minDistToEnd)
+                point.x += cross.x * xScalingFactor;
+
+                if (Vector3.Distance(point, end) <= minDistToEnd)
                 {
                     break;
                 }
-
-                point.x += cross.x * xScalingFactor;
 
                 float xDist = end.x - point.x;
                 float zDist = end.z - point.z;
