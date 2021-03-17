@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Logic;
-using System;
+﻿using System;
 using System.Linq;
+using Assets.Scripts.Logic;
 using TMPro;
 using UnityEngine;
 
@@ -13,13 +13,13 @@ namespace Assets.Scripts.UI
     /// </summary>
     public class LifeTextHandler : UiElement
     {
-        public override GameState[] VisibleGameStates => visiblegameStates;
-        
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.Running, GameState.Paused };
+
         private TMP_Text lifeText;
         private Player player;
 
-        #region UnityMethods
+        public override GameState[] VisibleGameStates => visiblegameStates;
+
         protected override void Awake()
         {
             base.Awake();
@@ -43,7 +43,6 @@ namespace Assets.Scripts.UI
             player.CurrentLivesChanged += LivesChanged;
             UpdateText(player.MaxLives, player.CurrentLives);
         }
-        #endregion
 
         /// <summary>
         /// Event handler when the player's life count changed.

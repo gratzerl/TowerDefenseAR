@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Logic
@@ -8,7 +8,7 @@ namespace Assets.Scripts.Logic
     /// A container for retrieving referencable components.
     /// This container stores references to all game objects which are referenced somewhere
     /// in the scripts.
-    /// Retrieving gameobject references this way, is faster and more efficient than using <see cref="GameObject.Find(string)"/>
+    /// Retrieving game object references this way, is faster and more efficient than using <see cref="GameObject.Find(string)"/>
     /// </summary>
     public sealed class ReferencablesContainer
     {
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Logic
         /// </summary>
         public ReferenceableComponent GetByName(string name)
         {
-            if(!references.ContainsKey(name))
+            if (!references.ContainsKey(name))
             {
                 Debug.LogWarning($"No referencable registered with the name {name}");
                 return null;

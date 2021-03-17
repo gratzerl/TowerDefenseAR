@@ -1,42 +1,58 @@
-﻿using Assets.Scripts.Logic;
-using System;
+﻿using System;
 
-/// <summary>
-/// Thread-safe service for managing the current game state.
-/// Provides an event which is invoked after the game state changed.
-/// </summary>
-sealed class GameStateService: IGameStateService
+namespace Assets.Scripts.Logic
 {
-    #region Private Members
-    private static readonly object locker = new object();
-    private GameState currentState = GameState.Unknown;
-    #endregion
-
-    public event EventHandler Initialising; 
-    public event EventHandler<GameStateChangedEventArgs> GameStateChanged;
-    
-    public GameState CurrentState
+    /// <summary>
+    /// Thread-safe state management service for managing the current game state and stage.
+    /// Provides an event which is invoked after the game state changed
+    /// and an event when the current stage changed.
+    /// </summary>
+    public sealed class GameStateService : IGameStateService
     {
-        get => currentState;
-        set
+        private static readonly object Locker = new object();
+        private GameState currentState = GameState.Unknown;
+        private int currentStage = 0;
+
+        public event EventHandler Initialising; 
+
+        public event EventHandler<GameStateChangedEventArgs> GameStateChanged;
+
+        public GameState CurrentState
         {
-            lock (locker)
+            get => currentState;
+            set
             {
-                var previous = currentState;
-                currentState = value;
-                var args = new GameStateChangedEventArgs { PreviousState = previous, CurrentState = currentState };
-                GameStateChanged?.Invoke(this, args);
+                lock (Locker)
+                {
+                    var previous = currentState;
+                    currentState = value;
+                    var args = new GameStateChangedEventArgs { PreviousState = previous, CurrentState = currentState };
+                    GameStateChanged?.Invoke(this, args);
+                }
             }
         }
-    }
 
-    /// <summary>
-    /// Invokes the <see cref="Initialising"/> event and sets the game state
-    /// to <see cref="GameState.Ready"/>.
-    /// </summary>
-    public void InitialiseGame()
-    {
-        Initialising?.Invoke(this, EventArgs.Empty);
-        CurrentState = GameState.Initialised;
+        public int CurrentStage
+        { 
+            get => currentStage; 
+            set
+            {
+                lock (Locker)
+                {
+                    currentStage = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Invokes the <see cref="Initialising"/> event, sets the game state
+        /// to <see cref="GameState.Ready"/> and the current stage to 1.
+        /// </summary>
+        public void InitialiseGame()
+        {
+            CurrentStage = 1;
+            CurrentState = GameState.Initialised;
+            Initialising?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

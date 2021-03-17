@@ -5,15 +5,15 @@ namespace Assets.Scripts
 {
     /// <summary>
     /// Component for projectiles.
-    /// Detroys itself if its target is destroyed.
+    /// Destroys itself if its target is destroyed.
     /// On collision it will apply a specified amount of damage to the enemy.
     /// </summary>
     public class Projectile : MonoBehaviour
     {
         public float Speed;
         public int Damage;
+
         public GameObject Target { get; set; }
-        
 
         private void Start()
         {

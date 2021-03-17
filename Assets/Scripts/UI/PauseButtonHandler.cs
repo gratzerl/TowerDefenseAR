@@ -9,17 +9,15 @@ namespace Assets.Scripts.UI
     /// </summary>
     public class PauseButtonHandler : UiElement
     {
-        public override GameState[] VisibleGameStates => visiblegameStates;
-
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.Running };
 
-        #region UnityMethods
+        public override GameState[] VisibleGameStates => visiblegameStates;
+
         protected override void Awake()
         {
             base.Awake();
 
             gameObject.AddComponent(typeof(ReferenceableComponent));
         }
-        #endregion
     }
 }

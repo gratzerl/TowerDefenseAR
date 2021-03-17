@@ -9,16 +9,15 @@ namespace Assets.Scripts.UI
     /// </summary>
     public class SurrenderButtonHandler : UiElement
     {
-        public override GameState[] VisibleGameStates => visiblegameStates;
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.Paused };
+        
+        public override GameState[] VisibleGameStates => visiblegameStates;
 
-        #region UnityMethods
         protected override void Awake()
         {
             base.Awake();
 
             gameObject.AddComponent(typeof(ReferenceableComponent));
         }
-        #endregion
     }
 }

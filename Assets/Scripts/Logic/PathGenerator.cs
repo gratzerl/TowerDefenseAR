@@ -6,37 +6,33 @@ using UnityEngine;
 namespace Assets.Scripts.Logic
 {
     /// <summary>
-    /// Thread-safe singleton class mangaging the current path between spawn and end.
+    /// Thread-safe singleton class managing the current path between spawn and end.
     /// </summary>
-    sealed class PathGenerator: IPathGenerator
+    public sealed class PathGenerator : IPathGenerator
     {
-        #region Private Members
-        private const float minDistToEnd = 0.03f;
-        private const float varianceScalingFactor = 0.2f;
-        private const float xScalingFactor = 0.02f;
-        private const float stepSize = 0.015f;
-        private static readonly object locker = new object();
+        private const float MinDistToEnd = 0.03f;
+        private const float VarianceScalingFactor = 0.2f;
+        private const float XScalingFactor = 0.02f;
+        private const float StepSize = 0.015f;
 
-        private List<Vector3> _currentPath = new List<Vector3>();
-        #endregion
+        private static readonly object Locker = new object();
 
-        #region Properties & Events
+        private List<Vector3> currentPath = new List<Vector3>();
+
+        public event EventHandler PathChanged;
+
         public IReadOnlyList<Vector3> CurrentPath
         {
-            get => _currentPath.AsReadOnly();
+            get => currentPath.AsReadOnly();
             private set
             {
-                lock(locker)
+                lock (Locker)
                 {
-                    _currentPath = value.ToList();
+                    currentPath = value.ToList();
                 }
             }
         }
 
-        public event EventHandler PathChanged;
-        #endregion
-
-        #region Methods
         /// <summary>
         /// Generates a random path between start and end.
         /// Updates <see cref="CurrentPath "/>and raises the <see cref="CurrentPathChanged"/> event.
@@ -50,7 +46,7 @@ namespace Assets.Scripts.Logic
             var normal = direction.normalized;
             var cross = Vector3.Cross(Vector3.up, normal);
 
-            var variance =  direction.magnitude * varianceScalingFactor;
+            var variance = direction.magnitude * VarianceScalingFactor;
             
             var amount = 0.0f;
             var path = new List<Vector3>() { start };
@@ -58,12 +54,12 @@ namespace Assets.Scripts.Logic
 
             while (amount < 1.0f)
             {
-                amount = Mathf.Clamp01(amount + stepSize);
+                amount = Mathf.Clamp01(amount + StepSize);
                 var point = Vector3.Lerp(previous, end, amount);
                 
-                point.x += cross.x * xScalingFactor;
+                point.x += cross.x * XScalingFactor;
 
-                if (Vector3.Distance(point, end) <= minDistToEnd)
+                if (Vector3.Distance(point, end) <= MinDistToEnd)
                 {
                     break;
                 }
@@ -73,7 +69,7 @@ namespace Assets.Scripts.Logic
                 double between = Math.Atan2(zDist, xDist);
 
                 float maxAngle = RandomAngleRad(40, 120);
-                float newAngle = (float)(between + ((UnityEngine.Random.Range(0.1f, 1.0f) * maxAngle) - maxAngle / 2));
+                float newAngle = (float)(between + (((UnityEngine.Random.Range(0.1f, 1.0f) * maxAngle) - maxAngle) / 2));
 
                 point.z += cross.z * (float)Math.Sin(newAngle) * UnityEngine.Random.Range(-variance, variance);
 
@@ -86,7 +82,7 @@ namespace Assets.Scripts.Logic
                 previous = point;
             }
 
-            lock (locker)
+            lock (Locker)
             {
                 CurrentPath = path;
                 PathChanged?.Invoke(this, EventArgs.Empty);
@@ -102,6 +98,5 @@ namespace Assets.Scripts.Logic
         {
             return (float)(Math.PI * UnityEngine.Random.Range(minDegree, maxDegree) / 180.0);
         }
-        #endregion
     }
 }

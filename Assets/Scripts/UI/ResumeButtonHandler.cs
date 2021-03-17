@@ -9,15 +9,14 @@ namespace Assets.Scripts.UI
     public class ResumeButtonHandler : UiElement
     {
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.Paused };
+
         public override GameState[] VisibleGameStates => visiblegameStates;
 
-        #region UnityMethods
         protected override void Awake()
         {
             base.Awake();
 
             gameObject.AddComponent(typeof(ReferenceableComponent));
         }
-        #endregion
     }
 }

@@ -10,17 +10,15 @@ namespace Assets.Scripts.Logic
     /// </summary>
     public sealed class ServiceContainer
     {
-        #region Private Members
-        private static readonly object locker = new object();
+        private static readonly object Locker = new object();
         private static ServiceContainer instance = null;
         private readonly IDictionary<string, object> services = new Dictionary<string, object>();
-        #endregion
 
         public static ServiceContainer Instance
         {
             get
             {
-                lock (locker)
+                lock (Locker)
                 {
                     if (instance is null)
                     {
@@ -53,11 +51,13 @@ namespace Assets.Scripts.Logic
         public T Get<T>()
         {
             var name = typeof(T).Name;
+
             if (!services.ContainsKey(name))
             {
                 Debug.LogError($"Get failed: Service '{name}' is not registered.");
                 throw new InvalidOperationException();
             }
+
             return (T)services[name];
         }
 

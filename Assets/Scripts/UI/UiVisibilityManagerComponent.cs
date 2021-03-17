@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Logic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Logic;
 using UnityEngine;
 
 namespace Assets.Scripts.UI
@@ -27,7 +27,7 @@ namespace Assets.Scripts.UI
         private void Start()
         {
             GetUiElements();
-            UpdateVisibility(gameStateService.CurrentState, GameState.Unknown);
+            UpdateVisibility(gameStateService.CurrentState);
         }
 
         private void OnDestroy()
@@ -43,7 +43,7 @@ namespace Assets.Scripts.UI
                 .ToList();
         }
 
-        private void UpdateVisibility(GameState currentState, GameState previousState)
+        private void UpdateVisibility(GameState currentState)
         {
             if (uiElements == null || !uiElements.Any())
             {
@@ -58,7 +58,7 @@ namespace Assets.Scripts.UI
 
         private void HandleGameStateChange(object sender, GameStateChangedEventArgs args)
         {
-            UpdateVisibility(args.CurrentState, args.PreviousState);
+            UpdateVisibility(args.CurrentState);
         }
     }
 }

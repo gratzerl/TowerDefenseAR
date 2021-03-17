@@ -11,7 +11,8 @@
             public const string Defender = "Defender";
         }
 
-        public static class Objects { 
+        public static class Objects 
+        { 
             public const string End = "End";
             public const string Spawn = "Spawn";
             public const string WaypointAnchor = "WaypointAnchor";

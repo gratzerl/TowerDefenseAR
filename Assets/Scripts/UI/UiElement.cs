@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Scripts.UI
 {
     /// <summary>
-    /// Marker interface for ui elements to make them easier retrievable
+    /// Marker interface for UI elements to make them easier retrievable
     /// in the <see cref="ReferencablesContainer"/>.
     /// Stores the <see cref="GameState"/> when the UI element is visible (active).
     /// </summary>
@@ -14,16 +14,6 @@ namespace Assets.Scripts.UI
         private CanvasGroup canvasGroup;
 
         public abstract GameState[] VisibleGameStates { get; }
-
-        #region UnityMethods
-        protected virtual void Awake()
-        {
-            if(!gameObject.TryGetComponent<CanvasGroup>(out canvasGroup))
-            {
-                throw new MissingComponentException("Component CanvasGroup is missing");
-            }
-        }
-        #endregion
 
         /// <summary>
         /// Hides or shows the UI element.
@@ -37,6 +27,14 @@ namespace Assets.Scripts.UI
             else
             {
                 SetCanvasValues(0, false, false);
+            }
+        }
+        
+        protected virtual void Awake()
+        {
+            if (!gameObject.TryGetComponent<CanvasGroup>(out canvasGroup))
+            {
+                throw new MissingComponentException("Component CanvasGroup is missing");
             }
         }
 

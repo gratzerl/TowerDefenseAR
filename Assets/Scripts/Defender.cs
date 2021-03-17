@@ -1,11 +1,12 @@
-﻿using Assets.Scripts.Logic;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Logic;
 using UnityEngine;
 
-namespace Assets.Scripts {
+namespace Assets.Scripts 
+{
     /// <summary>
     /// Component for defender objects which shoot projectiles at an enemy
     /// if the enemy is within its range of action.
@@ -21,6 +22,7 @@ namespace Assets.Scripts {
         private GameObject target;
         private IGameStateService gameStateService;
 
+        #region UnityMehtods
         private void Start()
         {
             gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
@@ -36,6 +38,7 @@ namespace Assets.Scripts {
 
             UpdateTarget();
         }
+        #endregion
 
         /// <summary>
         /// Checks whether the current target is still in range.
@@ -69,7 +72,7 @@ namespace Assets.Scripts {
         }
 
         /// <summary>
-        /// Instatiates projectiles which move towards the current target.
+        /// Instantiates projectiles which move towards the current target.
         /// </summary>
         private IEnumerator ShootProjectile()
         {

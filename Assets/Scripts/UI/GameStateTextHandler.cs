@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Logic;
-using System.Collections;
+﻿using System.Collections;
+using Assets.Scripts.Logic;
 using TMPro;
 using UnityEngine;
 
@@ -13,19 +13,23 @@ namespace Assets.Scripts.UI
         public string WonMessage;
         public string GameOverMessage;
         public string PausedMessage;
+        public string StageClearedMessage;
+        public string StageStartedMessage;
 
-        public override GameState[] VisibleGameStates { get => visiblegameStates; }
-
-        private readonly GameState[] visiblegameStates = new GameState[] { 
+        private readonly GameState[] visiblegameStates = new GameState[] 
+        { 
             GameState.GameOver,
             GameState.Paused,
             GameState.Won,
+            GameState.StageCleared,
+            GameState.Running,
         };
 
         private IGameStateService gameStateService;
         private TMP_Text displayedText;
 
-        #region UnityMethods
+        public override GameState[] VisibleGameStates { get => visiblegameStates; }
+
         protected override void Awake()
         {
             base.Awake();
@@ -41,14 +45,13 @@ namespace Assets.Scripts.UI
         {
             gameStateService.GameStateChanged -= UpdateText;
         }
-        #endregion
 
         /// <summary>
         /// Updates the text in the middle of the screen, after the game state changed.
         /// </summary>
         private void UpdateText(object sender, GameStateChangedEventArgs args)
         {
-            switch(args.CurrentState)
+            switch (args.CurrentState)
             {
                 case GameState.GameOver:
                     displayedText.text = GameOverMessage;
@@ -59,10 +62,26 @@ namespace Assets.Scripts.UI
                 case GameState.Won:
                     displayedText.text = WonMessage;
                     break;
+                case GameState.StageCleared:
+                    displayedText.text = StageClearedMessage;
+                    break;
+                case GameState.Running:
+                    displayedText.text = string.Format(StageStartedMessage, gameStateService.CurrentStage);
+                    StartCoroutine(ClearText(2f));
+                    break;
                 default:
-                    displayedText.text = string.Empty;
+                    StartCoroutine(ClearText(0f));
                     break;
             }
+        }
+
+        /// <summary>
+        /// Removes the text after a delay.
+        /// </summary>
+        private IEnumerator ClearText(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            displayedText.text = string.Empty;
         }
     }
 }

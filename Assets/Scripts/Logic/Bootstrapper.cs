@@ -8,8 +8,8 @@ namespace Assets.Scripts.Logic
     public static class Bootstrapper
     {
         /// <summary>
-        /// Called before awake in the monobehaviour objects.
-        /// Used to setup necessary services.
+        /// Called before awake in the MonoBehaviour objects.
+        /// Used to register necessary services in the service container.
         /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void InitializeServices()
@@ -22,8 +22,8 @@ namespace Assets.Scripts.Logic
         }
 
         /// <summary>
-        /// Called after awake in the monobehaviour objects.
-        /// Finishes the game initalisation.
+        /// Called after awake in the MonoBehaviour objects.
+        /// Finishes the game initialization.
         /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         public static void FinishInitialization()

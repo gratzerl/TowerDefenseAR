@@ -8,7 +8,7 @@ namespace Assets.Scripts
     /// This should be the preferred way to get a reference to a game object and it should be used instead of
     /// <see cref="GameObject.Find(string)"/>, because it is more efficient.
     /// </summary>
-    public class ReferenceableComponent: MonoBehaviour
+    public class ReferenceableComponent : MonoBehaviour
     {
         private ReferencablesContainer referencables;
 

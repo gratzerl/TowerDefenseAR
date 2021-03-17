@@ -1,13 +1,12 @@
-﻿using Assets.Scripts.Logic;
-using System;
+﻿using System;
+using Assets.Scripts.Logic;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
     /// <summary>
-    /// Moves the gameobject along the current path.
+    /// Moves the game object along the current path.
     /// </summary>
-
     public class MoveAlongPath : MonoBehaviour
     {
         public float Speed = 1f;
@@ -20,6 +19,7 @@ namespace Assets.Scripts
         private IPathGenerator pathGenerator;
         private IGameStateService gameStateService;
 
+        #region UnityMehtods
         private void Start()
         {
             gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
@@ -53,19 +53,21 @@ namespace Assets.Scripts
                 hasReachedEnd = true;
             }
         }
+        #endregion
 
         /// <summary>
-        /// Reset path
+        /// Resets the waypoint index.
+        /// Restarts checking path nodes.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
         private void ResetPath(object sender, EventArgs args)
         {
             waypointIdx = 0;
-            timer = 0;
             CheckWaypoint();
         }
 
+        /// <summary>
+        /// Resets the timer and selects the start and target waypoints.
+        /// </summary>
         private void CheckWaypoint()
         {
             timer = 0;
