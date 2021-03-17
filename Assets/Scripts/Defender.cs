@@ -11,21 +11,25 @@ namespace Assets.Scripts
     /// Component for defender objects which shoot projectiles at an enemy
     /// if the enemy is within its range of action.
     /// </summary>
+    [RequireComponent(typeof(AudioSource))]
     public class Defender : MonoBehaviour
     {
         public float ProjectileSpawnGap = 0.5f;
         public GameObject Projectile;
         public GameObject BarrelMuzzle;
         public EnemyFinder AttackRange;
+        public AudioClip ShotSound;
+        public ParticleSystem ShotParticleSystem;
 
         private readonly IList<GameObject> projectiles = new List<GameObject>();
         private GameObject target;
         private IGameStateService gameStateService;
+        private AudioSource audioSource;
 
-        #region UnityMehtods
         private void Start()
         {
             gameStateService = ServiceContainer.Instance.Get<IGameStateService>();
+            audioSource = gameObject.GetComponent<AudioSource>();
         }
 
         private void Update()
@@ -38,7 +42,6 @@ namespace Assets.Scripts
 
             UpdateTarget();
         }
-        #endregion
 
         /// <summary>
         /// Checks whether the current target is still in range.
@@ -78,9 +81,17 @@ namespace Assets.Scripts
         {
             while (target != null)
             {
-                var muzzleTransform = BarrelMuzzle.transform;
-                var projectile = Instantiate(Projectile, muzzleTransform.position, muzzleTransform.rotation);
-                projectile.GetComponent<Projectile>().Target = target;
+                if (gameStateService.CurrentState == GameState.Running)
+                {
+                    audioSource.PlayOneShot(ShotSound, 0.4f);
+                    ShotParticleSystem.Play();
+
+                    var muzzlePos = BarrelMuzzle.transform;
+
+                    var projectile = Instantiate(Projectile, muzzlePos.position, muzzlePos.rotation);
+                    projectile.GetComponent<Projectile>().Target = target;
+                }
+
                 yield return new WaitForSeconds(ProjectileSpawnGap);
             }
         }

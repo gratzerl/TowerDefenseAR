@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 326620020079199768}
   - component: {fileID: 326620020078232792}
   m_Layer: 0
-  m_Name: Turret
+  m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,6 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1291701548318991742}
+  - {fileID: 7182431128162162491}
   m_Father: {fileID: 326620020080526906}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -92,6 +93,7 @@ GameObject:
   - component: {fileID: 326620020079199770}
   - component: {fileID: 326620020078232794}
   - component: {fileID: 2118484007}
+  - component: {fileID: 315158625746910185}
   m_Layer: 0
   m_Name: Tower02
   m_TagString: Untagged
@@ -176,8 +178,106 @@ MonoBehaviour:
   ProjectileSpawnGap: 0.5
   Projectile: {fileID: 9029704388198255636, guid: 0b7ea6f1009705b4eae3271b5234a654,
     type: 3}
-  BarrelMuzzle: {fileID: 0}
+  BarrelMuzzle: {fileID: 7121427248505459890}
   AttackRange: {fileID: 0}
+  ShotSound: {fileID: 8300000, guid: 6f3ee022024226f4ea0038385b490369, type: 3}
+  ShotParticleSystem: {fileID: 6997543804662616965}
+--- !u!82 &315158625746910185
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326620020080237082}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7121427248505459890
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +287,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1291701548318991742}
-  - component: {fileID: 8346487886332561355}
   m_Layer: 0
   m_Name: BarrelMuzzle
   m_TagString: Untagged
@@ -209,15 +308,84 @@ Transform:
   m_Father: {fileID: 326620020080526904}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8346487886332561355
-MonoBehaviour:
+--- !u!1001 &7172040963243897055
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 326620020080526904}
+    m_Modifications:
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.452
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.208
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11419745891263226, guid: 482a2312b980871448d837ca1443a83c,
+        type: 3}
+      propertyPath: m_Name
+      value: MuzzleShotEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 482a2312b980871448d837ca1443a83c, type: 3}
+--- !u!4 &7182431128162162491 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 10461094428780516, guid: 482a2312b980871448d837ca1443a83c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7172040963243897055}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7121427248505459890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 532d60bea643e5e418ddb02b2a90073e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+--- !u!198 &6997543804662616965 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 185896929531880282, guid: 482a2312b980871448d837ca1443a83c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7172040963243897055}
+  m_PrefabAsset: {fileID: 0}

@@ -8,7 +8,8 @@ which will attack an enemy within their reach of action. The game is over when e
 This project is still in development and the following things will be worked on next in version 2:
   - [x] Support of multiple game stages
   - [x] Add more enemy types 
-  - [ ] Play sound effects when shooting projectiles
+  - [x] Play sound effects when shooting projectiles
+  - [x] Display particle effect when shooting projectiles
   - [ ] Improve path generation algorithm
 
 These things have already been fixed in version 1.0:
@@ -33,6 +34,11 @@ The following assets are used:
 * [Logo](https://assetstore.unity.com/packages/2d/gui/icons/20-logo-templates-with-customizable-psd-vector-sources-174999)
 * [Monster Duo Polyart](https://assetstore.unity.com/packages/3d/characters/creatures/rpg-monster-duo-pbr-polyart-157762)
 * [RPG Monster Partners PBR Polyart](https://assetstore.unity.com/packages/3d/characters/creatures/rpg-monster-partners-pbr-polyart-168251)
+* [Explosions Particle Effects Pack](https://assetstore.unity.com/packages/essentials/asset-packs/unity-particle-pack-5-x-73777)
+
+## Sounds
+The following sound effects are used:
+* [Cannon shot](http://creativesounddesign.com/sound/mp3_14/Cannon_Back_Powder_Shot.mp3)
 
 ## Version 1
 ### Start
