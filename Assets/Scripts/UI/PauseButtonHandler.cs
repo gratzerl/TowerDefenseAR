@@ -1,20 +1,25 @@
 ﻿using Assets.Scripts.Logic;
-using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
     /// <summary>
     /// Component for the pause button. 
-    /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to <see cref="GameState.Running"/>.
+    /// Registers itself as <see cref="ReferenceableComponent"/> and sets 
+    /// the <see cref="VisiblegameStates"/> to <see cref="GameState.Running"/>.
     /// </summary>
-    public class PauseButtonHandler : MonoBehaviour, IUiElement
+    public class PauseButtonHandler : UiElement
     {
-        private readonly GameState[] visiblegameStates = new GameState[] { GameState.Running };
-        public GameState[] VisibleGameStates => visiblegameStates;
+        public override GameState[] VisibleGameStates => visiblegameStates;
 
-        private void Awake()
+        private readonly GameState[] visiblegameStates = new GameState[] { GameState.Running };
+
+        #region UnityMethods
+        protected override void Awake()
         {
+            base.Awake();
+
             gameObject.AddComponent(typeof(ReferenceableComponent));
         }
+        #endregion
     }
 }

@@ -11,19 +11,21 @@ namespace Assets.Scripts.UI
     /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to 
     /// <see cref="GameState.Paused"/>, and <see cref="GameState.Running"/>.
     /// </summary>
-    public class HealthIndicatorHandler : MonoBehaviour, IUiElement
+    public class LifeTextHandler : UiElement
     {
-        public GameState[] VisibleGameStates => visiblegameStates;
+        public override GameState[] VisibleGameStates => visiblegameStates;
         
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.Running, GameState.Paused };
-        private TMP_Text healthIndicator;
+        private TMP_Text lifeText;
         private Player player;
 
-        private void Awake()
+        #region UnityMethods
+        protected override void Awake()
         {
+            base.Awake();
+
             gameObject.AddComponent(typeof(ReferenceableComponent));
-            
-            healthIndicator = gameObject.GetComponent<TextMeshProUGUI>();
+            lifeText = gameObject.GetComponent<TextMeshProUGUI>();
         }
 
         private void Start()
@@ -34,13 +36,14 @@ namespace Assets.Scripts.UI
             if (playerTuple == default(ValueTuple<GameObject, Player>))
             {
                 Debug.LogError("No player referencable found. Make sure the player has a referenceable component.");
-                throw new Exception("No player found.");
+                throw new MissingComponentException("No player component found.");
             }
             
             player = playerTuple.Item2;
             player.CurrentLivesChanged += LivesChanged;
             UpdateText(player.MaxLives, player.CurrentLives);
         }
+        #endregion
 
         /// <summary>
         /// Event handler when the player's life count changed.
@@ -51,11 +54,11 @@ namespace Assets.Scripts.UI
         }
 
         /// <summary>
-        /// Updates the health indicator in the UI.
+        /// Updates the life text in the UI.
         /// </summary>
         private void UpdateText(int maxLives, int currentLives)
         {
-            healthIndicator.text = $"{currentLives}/{maxLives} Lives";
+            lifeText.text = $"{currentLives}/{maxLives} Lives";
         }
     }
 }

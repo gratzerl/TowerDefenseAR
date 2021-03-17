@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Logic;
-using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
@@ -7,13 +6,18 @@ namespace Assets.Scripts.UI
     /// Component for the resume button. 
     /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to <see cref="GameState.Paused"/>.
     /// </summary>
-    public class ResumeButtonHandler : MonoBehaviour, IUiElement
+    public class ResumeButtonHandler : UiElement
     {
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.Paused };
-        public GameState[] VisibleGameStates => visiblegameStates;
-        private void Awake()
+        public override GameState[] VisibleGameStates => visiblegameStates;
+
+        #region UnityMethods
+        protected override void Awake()
         {
+            base.Awake();
+
             gameObject.AddComponent(typeof(ReferenceableComponent));
         }
+        #endregion
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Logic;
-using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
@@ -8,15 +7,19 @@ namespace Assets.Scripts.UI
     /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to 
     /// <see cref="GameState.GameOver"/>, <see cref="GameState.MissingTrackers"/>, and <see cref="GameState.Initialised"/>.
     /// </summary>
-    public class LogoHandler : MonoBehaviour, IUiElement
+    public class LogoHandler : UiElement
     {
-        public GameState[] VisibleGameStates => visiblegameStates;
+        public override GameState[] VisibleGameStates => visiblegameStates;
 
         private readonly GameState[] visiblegameStates = new GameState[] { GameState.Ready, GameState.Initialised, GameState.MissingTrackers };
 
-        private void Awake()
+        #region UnityMethods
+        protected override void Awake()
         {
+            base.Awake();
+
             gameObject.AddComponent(typeof(ReferenceableComponent));
         }
+        #endregion
     }
 }
