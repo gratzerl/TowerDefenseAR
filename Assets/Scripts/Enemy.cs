@@ -14,14 +14,14 @@ namespace Assets.Scripts
     [RequireComponent(typeof(Collider))]
     public class Enemy : MonoBehaviour
     {
-        public int MaxHealth = 5;
+        public double MaxHealth = 5;
 
-        private int currentHealth;
+        private double currentHealth;
         private bool isDead = false;
 
         public event EventHandler Killed;
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(double damage)
         {
             currentHealth -= damage;
 

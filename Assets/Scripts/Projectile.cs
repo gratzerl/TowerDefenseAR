@@ -11,7 +11,7 @@ namespace Assets.Scripts
     public class Projectile : MonoBehaviour
     {
         public float Speed;
-        public int Damage;
+        public double Damage;
 
         public GameObject Target { get; set; }
 

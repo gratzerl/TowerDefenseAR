@@ -157,7 +157,7 @@ namespace Assets.Scripts
 
                 var config = availableEnemies[UnityEngine.Random.Range(0, availableEnemies.Length)];
 
-                var enemy = Instantiate(config.Enemy, transform.position, transform.rotation);
+                var enemy = Instantiate(config.EnemyModel, transform.position, transform.rotation);
                 enemy.name = $"Enemy({Guid.NewGuid()})";
                 enemy.GetComponent<Enemy>().Killed += HandleEnemyKilled;
                 spawnedEnemies.Add(enemy);

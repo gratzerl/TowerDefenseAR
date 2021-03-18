@@ -15,6 +15,7 @@ namespace Assets.Scripts
     public class Defender : MonoBehaviour
     {
         public float ProjectileSpawnGap = 0.5f;
+        public double DamageAmplifier = 1f;
         public GameObject Projectile;
         public GameObject BarrelMuzzle;
         public EnemyFinder AttackRange;
@@ -88,8 +89,11 @@ namespace Assets.Scripts
 
                     var muzzlePos = BarrelMuzzle.transform;
 
-                    var projectile = Instantiate(Projectile, muzzlePos.position, muzzlePos.rotation);
-                    projectile.GetComponent<Projectile>().Target = target;
+                    var projectileGo = Instantiate(Projectile, muzzlePos.position, muzzlePos.rotation);
+                    var projectile = projectileGo.GetComponent<Projectile>();
+                    projectile.Target = target;
+                    projectile.Damage *= DamageAmplifier;
+                    ShotParticleSystem.Stop();
                 }
 
                 yield return new WaitForSeconds(ProjectileSpawnGap);
