@@ -5,12 +5,11 @@ Before the game starts, a random path is generated between the start and end mar
 which will attack an enemy within their reach of action. The game is over when either the player has no more lives left or all enemies have been killed.
 
 ## To-Dos
-This project is still in development and the following things will be worked on next in version 2:
+These things are included in version 2:
   - [x] Support of multiple game stages
   - [x] Add more enemy types 
   - [x] Play sound effects when shooting projectiles
   - [x] Display particle effect when shooting projectiles
-  - [ ] Improve path generation algorithm
 
 These things have already been fixed in version 1.0:
   - [x] Fix weird projectile behaviour
