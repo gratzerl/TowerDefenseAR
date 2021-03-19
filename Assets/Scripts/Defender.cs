@@ -93,10 +93,10 @@ namespace Assets.Scripts
                     var projectile = projectileGo.GetComponent<Projectile>();
                     projectile.Target = target;
                     projectile.Damage *= DamageAmplifier;
-                    ShotParticleSystem.Stop();
                 }
 
                 yield return new WaitForSeconds(ProjectileSpawnGap);
+                ShotParticleSystem.Stop();
             }
         }
 
