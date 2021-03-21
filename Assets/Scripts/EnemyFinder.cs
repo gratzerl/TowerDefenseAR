@@ -8,6 +8,7 @@ namespace Assets.Scripts
     /// This component tracks what enemy game objects are currently
     /// within its range.
     /// </summary>
+    [RequireComponent(typeof(Collider))]
     public class EnemyFinder : MonoBehaviour
     {
         public List<GameObject> Enemies { get; private set; }
