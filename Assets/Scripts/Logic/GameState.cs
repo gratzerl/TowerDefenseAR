@@ -7,7 +7,7 @@
     {
         Unknown = 0,
         Initialised,
-        MissingTrackers,
+        MissingMarkers,
         Ready,
         Running,
         StageCleared,

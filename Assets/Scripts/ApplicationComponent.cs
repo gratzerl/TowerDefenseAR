@@ -19,7 +19,7 @@ namespace Assets.Scripts
         public GameObject Waypoint;
         public int StageCount = 3;
 
-        private readonly IList<GameState> trackingGameStates = new List<GameState>() { GameState.Initialised, GameState.MissingTrackers, GameState.Ready };
+        private readonly IList<GameState> markerDependentGameStates = new List<GameState>() { GameState.Initialised, GameState.MissingMarkers, GameState.Ready };
         private readonly IList<GameObject> waypoints = new List<GameObject>();
 
         private IEnumerable<RequiredTrackingMarker> requiredMarkers;
@@ -133,16 +133,16 @@ namespace Assets.Scripts
 
         /// <summary>
         /// Checks if all required tracking target are being tracked properly.
-        /// If not all required targets are being tracked the game state is set to <see cref="GameState.MissingTrackers"/>.
+        /// If not all required targets are being tracked the game state is set to <see cref="GameState.MissingMarkers"/>.
         /// </summary>
         private void HandleTrackingStatusChanged(StatusChangeResult status)
         {
             if (requiredMarkers == null)
             {
-                gameStateService.CurrentState = GameState.MissingTrackers;
+                gameStateService.CurrentState = GameState.MissingMarkers;
                 return;
             }
-            else if (!trackingGameStates.Contains(gameStateService.CurrentState))
+            else if (!markerDependentGameStates.Contains(gameStateService.CurrentState))
             {
                 return;
             }
@@ -154,10 +154,10 @@ namespace Assets.Scripts
 
             if (!areAllTracked && (gameStateService.CurrentState == GameState.Ready || gameStateService.CurrentState == GameState.Initialised))
             {
-                gameStateService.CurrentState = GameState.MissingTrackers;
+                gameStateService.CurrentState = GameState.MissingMarkers;
                 Debug.Log("Required tracking markers are missing.");
             } 
-            else if (areAllTracked && gameStateService.CurrentState == GameState.MissingTrackers)
+            else if (areAllTracked && gameStateService.CurrentState == GameState.MissingMarkers)
             {
                 gameStateService.CurrentState = GameState.Ready;
                 Debug.Log("All required tracking markers are being tracked.");

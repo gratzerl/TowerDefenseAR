@@ -6,11 +6,11 @@ namespace Assets.Scripts.UI
     /// Component for the info box which is shown when required markers are not being
     /// tracked properly.
     /// Registers itself as <see cref="ReferenceableComponent"/> and sets the <see cref="VisiblegameStates"/> to 
-    /// <see cref="GameState.MissingTrackers"/>.
+    /// <see cref="GameState.MissingMarkers"/>.
     /// </summary>
     public class MissingTrackerInfoHandler : UiElement
     {
-        private readonly GameState[] visiblegameStates = new GameState[] { GameState.MissingTrackers };
+        private readonly GameState[] visiblegameStates = new GameState[] { GameState.MissingMarkers };
 
         public override GameState[] VisibleGameStates => visiblegameStates;
 
