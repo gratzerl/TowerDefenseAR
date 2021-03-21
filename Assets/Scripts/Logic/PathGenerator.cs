@@ -10,7 +10,7 @@ namespace Assets.Scripts.Logic
     /// </summary>
     public sealed class PathGenerator : IPathGenerator
     {
-        private const float MinDistToEnd = 0.03f;
+        private const float MinDistToEnd = 0.01f;
         private const float VarianceScalingFactor = 0.2f;
         private const float XScalingFactor = 0.02f;
         private const float StepSize = 0.015f;
@@ -38,7 +38,7 @@ namespace Assets.Scripts.Logic
         /// Updates <see cref="CurrentPath "/>and raises the <see cref="CurrentPathChanged"/> event.
         /// The method is based on two algorithms:
         /// https://forum.unity.com/threads/random-path-with-end-target.105344/
-        /// https://stackoverflow.com/questions/45160728/algorithm-to-generate-random-path-in-2d-tilemap
+        /// https://gist.github.com/jeffThompson/e3d99bbe1be5030389ecf374e48c392e
         /// </summary>
         public IEnumerable<Vector3> GeneratePath(Vector3 start, Vector3 end)
         {
